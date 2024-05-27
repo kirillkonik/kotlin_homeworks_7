@@ -4,7 +4,8 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.Select
 import org.testng.annotations.*
 
-class TestNGAnnotationKotlin_Change_1 {
+
+class TestNGAnnotationKotlin {
     var baseUrl = "https://www.facebook.com/"
     lateinit var driver: WebDriver
 
