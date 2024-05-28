@@ -39,7 +39,7 @@ class DataProviderKotlin {
         driver.get("https://www.bing.com/")
         Thread.sleep(2000)
 
-        val textToSearch = "Selenium"
+        val textToSearch = "git merge vs rebase"
 
         val etSearch: WebElement = driver.findElement(By.xpath("//*[@name='q']"))
         etSearch.sendKeys(textToSearch)
