@@ -36,7 +36,7 @@ class DataProviderKotlin {
     @Throws(InterruptedException::class)
     fun searchTest(browser: BrowserType) {
         val driver = getDriver(browser)
-        driver.get("https://google.com")
+        driver.get("https://www.yahoo.com/")
         Thread.sleep(2000)
 
         val textToSearch = "Selenium"
