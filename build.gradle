@@ -12,11 +12,11 @@ repositories {
 dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
-    implementation 'org.seleniumhq.selenium:selenium-java:4.21.0'
+    testImplementation 'org.seleniumhq.selenium:selenium-java:4.21.0'
     // https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
-    implementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
+    testImplementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
     // https://mvnrepository.com/artifact/org.testng/testng
-    implementation 'org.testng:testng:7.9.0'
+    testImplementation 'org.testng:testng:7.9.0'
 
 
 
@@ -30,3 +30,5 @@ test {
 kotlin {
     jvmToolchain(21)
 }
+
+task executeKotlinTest(type: Test)
