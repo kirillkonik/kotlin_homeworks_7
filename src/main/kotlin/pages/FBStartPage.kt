@@ -6,9 +6,11 @@ import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
 
 class FBStartPage(driver: WebDriver) {
+
     init {
         PageFactory.initElements(driver, this)
     }
+
     @FindBy(xpath = "//*[@data-testid = 'open-registration-form-button']")
     val signUpBtnOnMainScreen: WebElement? = null
 
