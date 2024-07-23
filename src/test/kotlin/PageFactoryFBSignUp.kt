@@ -1,10 +1,12 @@
 package pages
 
-import BrowsersList
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.firefox.FirefoxOptions
+import org.openqa.selenium.remote.RemoteWebDriver
 import org.testng.annotations.AfterTest
 import org.testng.annotations.BeforeTest
 import org.testng.annotations.Test
+import java.net.URL
 
 
 class PageFactoryFBSignUp {
@@ -14,7 +16,10 @@ class PageFactoryFBSignUp {
     @BeforeTest
     fun launchBrowser(){
         println("Launching a browser")
-        driver = BrowsersList.getRandomBrowser().getDriver()
+        //driver = BrowsersList.getRandomBrowser().getDriver()
+        val firefoxCapability = FirefoxOptions()
+        firefoxCapability.setCapability("se:name", "MyCurrentTest")
+        driver = RemoteWebDriver(URL("http://192.168.0.109:4444"), firefoxCapability)
     }
 
     @Test
@@ -33,13 +38,14 @@ class PageFactoryFBSignUp {
     @Throws(InterruptedException::class)
     fun findAndFillAllElements() {
         val regForm = RegistrationForm(driver)
-        regForm.FillElements()
+        regForm.FillElements("asdas@asd.asd", pass = "asd123dsa")
         regForm.checkAppropriateTextInInputField()
         regForm.signUpButtonIsVisibleAndClick()
     }
 
     @AfterTest
     fun terminateBrowser() {
+        Thread.sleep(5000)
         driver.close()
     }
 

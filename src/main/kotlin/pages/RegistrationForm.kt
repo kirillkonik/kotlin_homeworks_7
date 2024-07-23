@@ -1,6 +1,5 @@
 package pages
 
-import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
@@ -9,26 +8,47 @@ import org.openqa.selenium.support.ui.Select
 
 class RegistrationForm(private val driver: WebDriver) {
     init {
-        PageFactory.initElements(driver,this)
+        PageFactory.initElements(driver, this)
     }
-        @FindBy(name = "firstname")
-        var name: WebElement? = null
-        val surname: WebElement = driver.findElement(By.name("lastname"))
-        val emailOrNumber: WebElement = driver.findElement(By.name("reg_email__"))
-        val confirmEmail: WebElement = driver.findElement(By.name("reg_email_confirmation__"))
-        val password: WebElement = driver.findElement(By.name("reg_passwd__"))
-        val birthday: WebElement = driver.findElement(By.name("birthday_day"))
-        val birthMonth: WebElement = driver.findElement(By.name("birthday_month"))
-        val birthYear: WebElement = driver.findElement(By.name("birthday_year"))
-        val maleRadio: WebElement = driver.findElement(By.xpath("//*[@name='sex' and @value ='2']"))
 
-    fun FillElements(){
-        name?.sendKeys("Kkkk")
+    @FindBy(name = "firstname")
+    lateinit var name: WebElement
+
+    @FindBy(name = "lastname")
+    lateinit var surname: WebElement
+
+    @FindBy(name = "reg_email__")
+    lateinit var emailOrNumber: WebElement
+
+    @FindBy(name = "reg_email_confirmation__")
+    lateinit var confirmEmail: WebElement
+
+    @FindBy(name = "reg_passwd__")
+    lateinit var password: WebElement
+
+    @FindBy(name = "birthday_day")
+    lateinit var birthday: WebElement
+
+    @FindBy(name = "birthday_month")
+    lateinit var birthMonth: WebElement
+
+    @FindBy(name = "birthday_year")
+    lateinit var birthYear: WebElement
+
+    @FindBy(xpath = "//*[@name='sex' and @value ='2']")
+    lateinit var maleRadio: WebElement
+
+    @FindBy(name = "websubmit")
+    lateinit var signUpButton: WebElement
+
+
+    fun FillElements(email: String, pass: String) {
+        name.sendKeys("Kkkk")
         surname.sendKeys("Kkkk")
-        emailOrNumber.sendKeys("Kkkk@gmail.com")
+        emailOrNumber.sendKeys(email)
         Thread.sleep(500)
         confirmEmail.sendKeys("Kkkk@gmail.com")
-        password.sendKeys("111qweQWE!@#")
+        password.sendKeys(pass)
 
         val birthdayDropdown = Select(birthday)
         birthdayDropdown.selectByValue("23")
@@ -40,9 +60,8 @@ class RegistrationForm(private val driver: WebDriver) {
         birthYearDropdown.selectByValue("1998")
         maleRadio.click()
     }
+
     fun checkAppropriateTextInInputField() {
-        val emailOrNumber: WebElement = driver.findElement(By.name("reg_email__"))
-        val confirmEmail: WebElement = driver.findElement(By.name("reg_email_confirmation__"))
         val appropriateTextEmailOrNumber = emailOrNumber.getAttribute("value")
         val appropriateTextConfirmEmail = confirmEmail.getAttribute("value")
         val appropriateText = "Kkkk@gmail.com"
@@ -54,7 +73,6 @@ class RegistrationForm(private val driver: WebDriver) {
     }
 
     fun signUpButtonIsVisibleAndClick() {
-        val signUpButton: WebElement = driver.findElement(By.name("websubmit"))
         if (signUpButton.isDisplayed) {
             signUpButton.click()
             Thread.sleep(5000)

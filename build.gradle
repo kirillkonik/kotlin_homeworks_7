@@ -3,42 +3,35 @@ plugins {
     id 'java'
 }
 
-//group = 'org.example'
-//version = '1.0-SNAPSHOT'
+group = 'org.example'
+version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+//    def selenium_version = ""
+
+    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
     implementation 'org.seleniumhq.selenium:selenium-java:4.19.1'
+
     // https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
     implementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
+
 
     // https://mvnrepository.com/artifact/org.testng/testng
     testImplementation 'org.testng:testng:7.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
-
-
-
 test {
-    useJUnitPlatform()
     useTestNG()
-
-}
-kotlin {
-    jvmToolchain(21)
 }
 
-//task executeKotlinTest(type: Test) {
-//    description = "Run TestNG tests"
-//    group = "verification"
-//    classpath = sourceSets.test.runtimeClasspath
-//    testClassesDirs = sourceSets.test.output.classesDirs
-//    useTestNG() {
-//        useDefaultListeners = true
-//        suites 'src/test/suite/my_test.xml'
-//    }
-//}
+task executeKotlinTest(type: Test) {
+    useTestNG() {
+        useDefaultListeners = true
+        suites 'src/test/suite/my_tests.xml'
+    }
+}
