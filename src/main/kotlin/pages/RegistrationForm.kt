@@ -41,25 +41,65 @@ class RegistrationForm(private val driver: WebDriver) {
     @FindBy(name = "websubmit")
     lateinit var signUpButton: WebElement
 
+    fun enterName(name: String) {
+        this.name.sendKeys(name)
+    }
 
-    fun FillElements(email: String, pass: String) {
-        name.sendKeys("Kkkk")
-        surname.sendKeys("Kkkk")
-        emailOrNumber.sendKeys(email)
+    fun enterSurname(surname: String) {
+        this.surname.sendKeys(surname)
+    }
+
+    fun enterEmailOrNumber(emailOrNumber: String) {
+        this.emailOrNumber.sendKeys(emailOrNumber)
         Thread.sleep(500)
-        confirmEmail.sendKeys("Kkkk@gmail.com")
-        password.sendKeys(pass)
+    }
 
+    fun enterConfirmEmail(confirmEmail: String) {
+        this.confirmEmail.sendKeys(confirmEmail)
+    }
+
+    fun enterPassword(password: String) {
+        this.password.sendKeys(password)
+    }
+
+    fun selectBirthday(day: String) {
         val birthdayDropdown = Select(birthday)
-        birthdayDropdown.selectByValue("23")
+        birthdayDropdown.selectByValue(day)
+    }
 
+    fun selectBirthMonth(month: String) {
+        val birthdayDropdown = Select(birthMonth)
+        birthdayDropdown.selectByValue(month)
+    }
+
+    fun selectBirthYear(year: String) {
+        val birthdayDropdown = Select(birthYear)
+        birthdayDropdown.selectByValue(year)
+    }
+
+    fun selectMaleGenderInRadioBtn() {
+        this.maleRadio.click()
+    }
+
+
+
+   /* fun fillElements(email: String, pass: String) {
+       // name.sendKeys("Kkkk")
+       // surname.sendKeys("Kkkk")
+       // emailOrNumber.sendKeys(email)
+        Thread.sleep(500)
+        //confirmEmail.sendKeys("Kkkk@gmail.com")
+        //password.sendKeys(pass)
+
+        *//*val birthdayDropdown = Select(birthday)
+        birthdayDropdown.selectByValue("23")
         val birthMonthDropdown = Select(birthMonth)
         birthMonthDropdown.selectByIndex(3)
-
         val birthYearDropdown = Select(birthYear)
-        birthYearDropdown.selectByValue("1998")
-        maleRadio.click()
-    }
+        birthYearDropdown.selectByValue("1998") *//*
+
+       // maleRadio.click()
+    }*/
 
     fun checkAppropriateTextInInputField() {
         val appropriateTextEmailOrNumber = emailOrNumber.getAttribute("value")
