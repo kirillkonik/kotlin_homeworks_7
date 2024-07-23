@@ -9,7 +9,7 @@ import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
 import java.net.URL
 
-object TestData {
+object TestDataForRegistration {
 
     @JvmStatic
     @DataProvider(name = "registrationData")
@@ -20,7 +20,7 @@ object TestData {
     }
 }
 
-class PageFactoryFBSignUp {
+class  PageFactoryFBSignUp {
     var baseUrl = "https://www.facebook.com/"
     private lateinit var driver: WebDriver
 
@@ -46,7 +46,7 @@ class PageFactoryFBSignUp {
     }
 
 
-    @Test(dataProvider = "registrationData", dataProviderClass = TestData::class, dependsOnMethods = ["goToRegistrationScreen"])
+    @Test(dataProvider = "registrationData", dataProviderClass = TestDataForRegistration::class, dependsOnMethods = ["goToRegistrationScreen"])
     @Throws(InterruptedException::class)
     fun findAndFillAllElements(name: String, surname: String, emailOrNumber: String, confirmEmail: String,
                                password: String, birthday: String, birthMonth: String, birthYear: String) {
