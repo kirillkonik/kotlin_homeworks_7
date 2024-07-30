@@ -2,11 +2,13 @@ package pages
 
 import BrowserType
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.chrome.ChromeDriver
-import org.openqa.selenium.firefox.FirefoxDriver
+import org.openqa.selenium.chrome.ChromeOptions
+import org.openqa.selenium.firefox.FirefoxOptions
+import org.openqa.selenium.remote.RemoteWebDriver
 import org.testng.annotations.AfterTest
 import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
+import java.net.URL
 
 class PageFactoryFBSignUp {
     var baseUrl = "https://www.facebook.com/ "
@@ -23,11 +25,12 @@ class PageFactoryFBSignUp {
     var birthYear = "1998"
 
     private fun getDriver(browser: BrowserType): WebDriver {
-        val driver: WebDriver = when(browser) {
-            BrowserType.CHROME -> ChromeDriver()
-            BrowserType.FF -> FirefoxDriver()
-
+        val options = when(browser) {
+            BrowserType.CHROME -> ChromeOptions()
+            BrowserType.FF -> FirefoxOptions()
         }
+        options.setCapability("se:name", "MyCurrentTest")
+        val driver = RemoteWebDriver(URL("http://localhost:4444"), options)
         drivers.add(driver)
         return driver
     }
@@ -40,32 +43,12 @@ class PageFactoryFBSignUp {
         )
     }
 
-
-   /* @BeforeTest
-    fun launchBrowser(browser: BrowserType) {
-        WebDriverManager.firefoxdriver().setup()
-        println("Launching a browser")
-        val driver = BrowsersList.getRandomBrowser().getDriver()
-        //val firefoxCapability = FirefoxOptions()
-        //firefoxCapability.setCapability("se:name", "MyCurrentTest")
-        //driver = RemoteWebDriver(URL("http://localhost:4444"), firefoxCapability)
-
-        println("Opening FB start page")
-        //driver[url]
-        Thread.sleep(2000)
-
-    }*/
-
-
     @Test(dataProvider = "dataProviderDrivers")
     @Throws(InterruptedException::class)
     fun facebookSignUpTest(browser: BrowserType) {
-        //WebDriverManager.firefoxdriver().setup()
         println("Launching a browser")
         val driver = getDriver(browser)
-        //val firefoxCapability = FirefoxOptions()
-        //firefoxCapability.setCapability("se:name", "MyCurrentTest")
-        //driver = RemoteWebDriver(URL("http://localhost:4444"), firefoxCapability)
+
 
         println("Opening FB start page")
         driver[baseUrl]
