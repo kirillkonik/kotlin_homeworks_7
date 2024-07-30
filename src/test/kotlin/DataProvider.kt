@@ -11,14 +11,11 @@ import org.testng.annotations.Test
 class DataProviderKotlin {
     private val drivers = mutableListOf<WebDriver>()
 
-    enum class BrowserType {
-        CHROME, FF
-    }
-
     private fun getDriver(browser: BrowserType): WebDriver {
         val driver: WebDriver = when(browser) {
             BrowserType.CHROME -> ChromeDriver()
             BrowserType.FF -> FirefoxDriver()
+
         }
         drivers.add(driver)
         return driver

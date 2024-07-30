@@ -1,56 +1,85 @@
 package pages
 
+import BrowserType
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.firefox.FirefoxOptions
-import org.openqa.selenium.remote.RemoteWebDriver
+import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.firefox.FirefoxDriver
 import org.testng.annotations.AfterTest
-import org.testng.annotations.BeforeTest
 import org.testng.annotations.DataProvider
 import org.testng.annotations.Test
-import java.net.URL
 
-object TestDataForRegistration {
+class PageFactoryFBSignUp {
+    var baseUrl = "https://www.facebook.com/ "
+    var drivers = mutableListOf<WebDriver>()
 
-    @JvmStatic
-    @DataProvider(name = "registrationData")
-    fun createRegistrationData(): Array<Array<Any>> {
+
+    var name = "Joe"
+    var surname = "Trump"
+    var emailOrNumber = "Kkkk@gmail.com"
+    var confirmEmail = "Kkkk@gmail.com"
+    var password = "asd123dsa"
+    var birthday = "23"
+    var birthMonth = "2"
+    var birthYear = "1998"
+
+    private fun getDriver(browser: BrowserType): WebDriver {
+        val driver: WebDriver = when(browser) {
+            BrowserType.CHROME -> ChromeDriver()
+            BrowserType.FF -> FirefoxDriver()
+
+        }
+        drivers.add(driver)
+        return driver
+    }
+
+    @DataProvider(name = "dataProviderDrivers", parallel = true)
+    fun getDrivers(): Array<Array<Any>> {
         return arrayOf(
-            arrayOf("Joe", "Trump", "Kkkk@gmail.com", "Kkkk@gmail.com", "asd123dsa", "23", "3", "1998"),
+            arrayOf(BrowserType.CHROME),
+            arrayOf(BrowserType.FF)
         )
     }
-}
 
-class  PageFactoryFBSignUp {
-    var baseUrl = "https://www.facebook.com/"
-    private lateinit var driver: WebDriver
 
-    @BeforeTest
-    fun launchBrowser(){
+   /* @BeforeTest
+    fun launchBrowser(browser: BrowserType) {
+        WebDriverManager.firefoxdriver().setup()
         println("Launching a browser")
-        //driver = BrowsersList.getRandomBrowser().getDriver()
-        val firefoxCapability = FirefoxOptions()
-        firefoxCapability.setCapability("se:name", "MyCurrentTest")
-        driver = RemoteWebDriver(URL("http://192.168.0.109:4444"), firefoxCapability)
-    }
+        val driver = BrowsersList.getRandomBrowser().getDriver()
+        //val firefoxCapability = FirefoxOptions()
+        //firefoxCapability.setCapability("se:name", "MyCurrentTest")
+        //driver = RemoteWebDriver(URL("http://localhost:4444"), firefoxCapability)
 
-    @Test
-    @Throws(InterruptedException::class)
-    fun goToRegistrationScreen() {
         println("Opening FB start page")
-        driver.get(baseUrl)
+        //driver[url]
+        Thread.sleep(2000)
+
+    }*/
+
+
+    @Test(dataProvider = "dataProviderDrivers")
+    @Throws(InterruptedException::class)
+    fun facebookSignUpTest(browser: BrowserType) {
+        //WebDriverManager.firefoxdriver().setup()
+        println("Launching a browser")
+        val driver = getDriver(browser)
+        //val firefoxCapability = FirefoxOptions()
+        //firefoxCapability.setCapability("se:name", "MyCurrentTest")
+        //driver = RemoteWebDriver(URL("http://localhost:4444"), firefoxCapability)
+
+        println("Opening FB start page")
+        driver[baseUrl]
 
         Thread.sleep(2000)
 
         val startPage = FBStartPage(driver)
         startPage.goToRegistrationScreen()
-    }
 
+        Thread.sleep(2000)
 
-    @Test(dataProvider = "registrationData", dataProviderClass = TestDataForRegistration::class, dependsOnMethods = ["goToRegistrationScreen"])
-    @Throws(InterruptedException::class)
-    fun findAndFillAllElements(name: String, surname: String, emailOrNumber: String, confirmEmail: String,
-                               password: String, birthday: String, birthMonth: String, birthYear: String) {
         val registrationForm = RegistrationForm(driver)
+
+        Thread.sleep(2000)
 
         registrationForm.enterName(name)
         registrationForm.enterSurname(surname)
@@ -68,7 +97,10 @@ class  PageFactoryFBSignUp {
     @AfterTest
     fun terminateBrowser() {
         Thread.sleep(5000)
-        driver.close()
+        //driver.close()
+        for(driver in drivers){
+            driver.quit()
+        }
     }
 
 
