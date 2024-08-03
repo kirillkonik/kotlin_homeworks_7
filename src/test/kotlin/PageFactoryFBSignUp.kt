@@ -29,7 +29,7 @@ class PageFactoryFBSignUp {
             BrowserType.CHROME -> ChromeOptions()
             BrowserType.FF -> FirefoxOptions()
         }
-        options.setCapability("se:name", "MyCurrentTest")
+        options.setCapability("se:name", "FacebookSignUpTest in $browser browser")
         val driver = RemoteWebDriver(URL("http://localhost:4444"), options)
         drivers.add(driver)
         return driver

@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="my_test" parallel="tests">
+<suite name="my_test" parallel="methods" thread-count="3">
     <test name="my_test_data_provider_browsers">
         <classes>
             <class name="DataProviderKotlin" />
-        </classes>
-    </test>
-    <test name="my_test_testNG_facebook">
-        <classes>
-            <class name="TestNGAnnotationKotlin" />
+            <class name="pages.PageFactoryFBSignUp" />
         </classes>
     </test>
 </suite>
